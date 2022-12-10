@@ -30,7 +30,7 @@ public class JwtProvider {
         }
     }
 
-    private String generateToken(Authentication authentication) {
+    public String generateToken(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return Jwts.builder()
                 .setSubject(user.getUserName())
