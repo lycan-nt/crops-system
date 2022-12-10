@@ -20,7 +20,5 @@ export class LoginComponent {
     }
   }
 
-  register() {
 
-  }
 }

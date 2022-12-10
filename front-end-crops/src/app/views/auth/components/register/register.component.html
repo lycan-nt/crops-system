@@ -1,0 +1,18 @@
+<mat-form-field class="example-full-width">
+    <mat-label>User</mat-label>
+    <input type="text" matInput placeholder="Email" value="" [(ngModel)]="user">
+    <mat-icon matSuffix>account_circle</mat-icon>
+</mat-form-field>
+
+<mat-form-field class="example-full-width">
+    <mat-label>Password</mat-label>
+    <input type="password" matInput placeholder="Password" [(ngModel)]="password">
+    <mat-icon matSuffix>https</mat-icon>
+</mat-form-field>
+
+<mat-form-field class="example-full-width">
+    <mat-label>Confirm Password</mat-label>
+    <input type="password" matInput placeholder="Confirm Password" [(ngModel)]="confirm_password">
+    <mat-icon matSuffix>https</mat-icon>
+</mat-form-field>
+<button class="btn-register" mat-raised-button color="primary" (click)="register()">Register</button>
