@@ -33,3 +33,4 @@ build/
 .vscode/
 /src/main/resources/application-conf.properties
 /src/main/resources/application-config.properties
+/src/main/resources/crops.jks
