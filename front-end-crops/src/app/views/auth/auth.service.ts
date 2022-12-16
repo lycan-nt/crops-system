@@ -25,4 +25,13 @@ export class AuthService {
     }));
   }
 
+  isAuthentication(): boolean {
+    return this.localStorageService.retrieve("userName") != null;
+  }
+
+  logout() {
+    this.localStorageService.clear('authenticationToken');
+    this.localStorageService.clear('userName');
+  }
+
 }

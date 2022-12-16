@@ -15,13 +15,18 @@ import { AuthComponent } from './views/auth/auth.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { HeaderComponent } from './views/header/header.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { AuthGuardService } from './views/guards/auth-guard.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    AuthComponent
+    AuthComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -34,8 +39,11 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     HttpClientModule,
     NgxWebstorageModule.forRoot(),
     MatSnackBarModule,
+    MatToolbarModule,
+    MatTooltipModule,
     RouterModule.forRoot([
-      {path: '', component: AppComponent}
+      {path: 'login', component: AuthComponent},
+      {path: '', component: HeaderComponent, canActivate: [AuthGuardService]}
     ]),
     BrowserAnimationsModule
   ],
