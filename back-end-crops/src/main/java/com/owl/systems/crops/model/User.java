@@ -1,7 +1,6 @@
 package com.owl.systems.crops.model;
 
-import jakarta.persistence.*;
-import lombok.extern.java.Log;
+import javax.persistence.*;
 
 @Entity
 @Table

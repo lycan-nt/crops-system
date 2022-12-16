@@ -1,12 +1,13 @@
 package com.owl.systems.crops.security;
 
-import com.owl.systems.crops.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import jakarta.annotation.PostConstruct;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
+
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.*;
@@ -33,7 +34,7 @@ public class JwtProvider {
     public String generateToken(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return Jwts.builder()
-                .setSubject(user.getUserName())
+                .setSubject(user.getUsername())
                 .signWith(getPrivateKey())
                 .compact();
     }

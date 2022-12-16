@@ -31,9 +31,9 @@ public class AuthService {
     public void signup(@RequestBody RegisterRequest registerRequest) {
         User user = new User();
         user.setUserName(registerRequest.getUserName());
-        user.setPassword(registerRequest.getPassword());
+        user.setPassword(encodePassword(registerRequest.getPassword()));
         user.setEmail(registerRequest.getEmail());
-        this.userRepository.save(user);
+        userRepository.save(user);
     }
 
     private String encodePassword(String passWord) {
@@ -41,10 +41,10 @@ public class AuthService {
     }
 
     public AuthenticationResponse login(LoginRequest loginRequest) {
-        Authentication authentication = this.authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUserName(), loginRequest.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String authenticationToken = this.jwtProvider.generateToken(authentication);
+        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUserName(),
+                loginRequest.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authenticate);
+        String authenticationToken = jwtProvider.generateToken(authenticate);
         return new AuthenticationResponse(authenticationToken, loginRequest.getUserName());
     }
 
