@@ -12,6 +12,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { LoginComponent } from './views/auth/components/login/login.component';
 import { RegisterComponent } from './views/auth/components/register/register.component';
 import { AuthComponent } from './views/auth/auth.component';
+import { HttpClientModule } from '@angular/common/http';
+import { NgxWebstorageModule } from 'ngx-webstorage';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,9 @@ import { AuthComponent } from './views/auth/auth.component';
     MatButtonModule,
     FormsModule,
     MatIconModule,
+    HttpClientModule,
+    NgxWebstorageModule.forRoot(),
+    MatSnackBarModule,
     RouterModule.forRoot([
       {path: '', component: AppComponent}
     ]),
