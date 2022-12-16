@@ -1,12 +1,12 @@
 <mat-form-field class="example-full-width">
   <mat-label>User</mat-label>
-  <input type="text" matInput placeholder="Email" value="" [(ngModel)]="user">
+  <input type="text" matInput placeholder="User" value="" [(ngModel)]="loginPayload.userName">
   <mat-icon matSuffix>account_circle</mat-icon>
 </mat-form-field>
 
 <mat-form-field class="example-full-width">
   <mat-label>Password</mat-label>
-  <input type="password" matInput placeholder="Password" [(ngModel)]="password">
+  <input type="password" matInput placeholder="Password" [(ngModel)]="loginPayload.password">
   <mat-icon matSuffix>https</mat-icon>
 </mat-form-field>
 
