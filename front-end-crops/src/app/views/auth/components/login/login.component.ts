@@ -26,8 +26,9 @@ export class LoginComponent {
         this._snackBar.open("Login Sucess.", "Ok", {duration: 5000})
       },
       error: erro => {
-        console.error("Login Error.");
-        this._snackBar.open("Login Error.", "Ok", 
+        this.loginPayload.userName = "";
+        this.loginPayload.password = "";
+        this._snackBar.open("Invalid password or login", "Ok", 
         {
           duration: 5000,
           panelClass: 'snack-error'
