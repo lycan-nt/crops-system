@@ -19,6 +19,9 @@ import { HeaderComponent } from './views/header/header.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { AuthGuardService } from './views/guards/auth-guard.service';
+import { NavComponent } from './views/nav/nav.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,8 @@ import { AuthGuardService } from './views/guards/auth-guard.service';
     LoginComponent,
     RegisterComponent,
     AuthComponent,
-    HeaderComponent
+    HeaderComponent,
+    NavComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +45,8 @@ import { AuthGuardService } from './views/guards/auth-guard.service';
     MatSnackBarModule,
     MatToolbarModule,
     MatTooltipModule,
+    MatSidenavModule,
+    MatListModule,
     RouterModule.forRoot([
       {path: 'login', component: AuthComponent},
       {path: '', component: HeaderComponent, canActivate: [AuthGuardService]}
