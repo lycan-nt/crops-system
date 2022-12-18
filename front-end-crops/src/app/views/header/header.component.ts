@@ -12,8 +12,4 @@ export class HeaderComponent {
     public authService: AuthService
   ) {}
 
-  logout() {
-
-  }
-
 }
