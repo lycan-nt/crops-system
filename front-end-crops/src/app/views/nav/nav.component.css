@@ -1,10 +1,5 @@
-/* .container {
-    width: 100vw;
-    height: 100vh;
-} */
-
 .sidenav {
-    background-color: #3f51B5;
+    background-color: #FFF;
     width: 200px;
 }
 
@@ -17,6 +12,6 @@
 }
 
 .content {
-    padding: 16px;
+    padding: 16px, 0;
     background-color: #FFF;
 }
