@@ -1,2 +1,9 @@
-<app-header></app-header>
-<app-nav></app-nav>
+<div class="render">
+    <div class="home" *ngIf="authService.isAuthentication()">
+        <app-header></app-header>
+        <app-nav></app-nav>
+    </div>
+    <div class="content">
+        <router-outlet></router-outlet>
+    </div>
+</div>

@@ -23,6 +23,7 @@ import { NavComponent } from './views/nav/nav.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { HomeComponent } from './views/home/home.component';
+import { EventsComponent } from './views/events/events.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { HomeComponent } from './views/home/home.component';
     AuthComponent,
     HeaderComponent,
     NavComponent,
-    HomeComponent
+    HomeComponent,
+    EventsComponent
   ],
   imports: [
     BrowserModule,
@@ -50,9 +52,11 @@ import { HomeComponent } from './views/home/home.component';
     MatSidenavModule,
     MatListModule,
     RouterModule.forRoot([
-      {path: '', component: HeaderComponent, canActivate: [AuthGuardService]},
+      {path: 'header', component: HeaderComponent, canActivate: [AuthGuardService]},
       {path: 'login', component: AuthComponent},
-      {path: 'home', component: HomeComponent, canActivate: [AuthGuardService]}
+      {path: 'home', component: HomeComponent, canActivate: [AuthGuardService]},
+      {path: 'events', component: EventsComponent, canActivate: [AuthGuardService]}
+
     ]),
     BrowserAnimationsModule
   ],
