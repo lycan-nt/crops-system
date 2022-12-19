@@ -1,7 +1,7 @@
-<mat-toolbar class="bar">
+<mat-toolbar class="bar" *ngIf="authService.isAuthentication()">
     <span>Crops System</span>
-    <span class="example-spacer"></span>
-    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" matTooltip="Logout" (click)="logout()">
+    <span class="spacer"></span>
+    <button mat-icon-button matTooltip="Logout" (click)="logout()">
         <mat-icon>logout</mat-icon>
     </button>
 </mat-toolbar>

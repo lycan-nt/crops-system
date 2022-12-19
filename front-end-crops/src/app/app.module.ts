@@ -52,7 +52,7 @@ import { EventsComponent } from './views/events/events.component';
     MatSidenavModule,
     MatListModule,
     RouterModule.forRoot([
-      {path: 'header', component: HeaderComponent, canActivate: [AuthGuardService]},
+      {path: 'header', component: HeaderComponent},
       {path: 'login', component: AuthComponent},
       {path: 'home', component: HomeComponent, canActivate: [AuthGuardService]},
       {path: 'events', component: EventsComponent, canActivate: [AuthGuardService]}
@@ -60,7 +60,7 @@ import { EventsComponent } from './views/events/events.component';
     ]),
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

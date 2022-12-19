@@ -1,9 +1,23 @@
-<div class="render">
-    <div class="home" *ngIf="authService.isAuthentication()">
-        <app-header></app-header>
-        <app-nav></app-nav>
-    </div>
-    <div class="content">
+<app-header></app-header>
+<mat-sidenav-container class="container" *ngIf="authService.isAuthentication()">
+    <mat-sidenav class="sidenav" mode="side" opened 
+        fixedInViewport="true" fixedTopGap="64">
+        <mat-nav-list class="nav-list">
+            <a mat-list-item routerLink="/">
+                <i class="material-icons"> 
+                    home
+                </i>
+                Início
+            </a>
+            <a mat-list-item routerLink="events"> 
+                <i class="material-icons"> 
+                    storefront
+                </i>
+                Events
+            </a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content class="content">
         <router-outlet></router-outlet>
-    </div>
-</div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

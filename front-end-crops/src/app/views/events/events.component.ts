@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-events',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./events.component.css']
 })
 export class EventsComponent {
+
+constructor(
+  public auth: AuthService
+) {}
 
 }
