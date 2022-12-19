@@ -23,7 +23,8 @@ export class LoginComponent {
 
     this.authService.login(this.loginPayload).subscribe({
       next: data => {
-        this._snackBar.open("Login Sucess.", "Ok", {duration: 5000})
+        this.route.navigateByUrl("/home");
+        this._snackBar.open("Login Sucess.", "Ok", {duration: 5000});
       },
       error: erro => {
         this.loginPayload.userName = "";

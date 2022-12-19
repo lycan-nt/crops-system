@@ -22,6 +22,7 @@ import { AuthGuardService } from './views/guards/auth-guard.service';
 import { NavComponent } from './views/nav/nav.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { HomeComponent } from './views/home/home.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { MatListModule } from '@angular/material/list';
     RegisterComponent,
     AuthComponent,
     HeaderComponent,
-    NavComponent
+    NavComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -48,8 +50,9 @@ import { MatListModule } from '@angular/material/list';
     MatSidenavModule,
     MatListModule,
     RouterModule.forRoot([
+      {path: '', component: HeaderComponent, canActivate: [AuthGuardService]},
       {path: 'login', component: AuthComponent},
-      {path: '', component: HeaderComponent, canActivate: [AuthGuardService]}
+      {path: 'home', component: HomeComponent, canActivate: [AuthGuardService]}
     ]),
     BrowserAnimationsModule
   ],
