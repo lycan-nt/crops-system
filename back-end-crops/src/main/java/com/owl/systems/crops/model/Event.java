@@ -62,5 +62,5 @@ public class Event {
     public void setPlaceEvent(String placeEvent) {
         this.placeEvent = placeEvent;
     }
-    
+
 }
