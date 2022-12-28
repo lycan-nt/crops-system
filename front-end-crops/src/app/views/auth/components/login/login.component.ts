@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth.service';
@@ -9,7 +9,7 @@ import { LoginPayload } from '../../login-payload';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
 
   loginPayload: LoginPayload = new LoginPayload();
 
@@ -18,6 +18,12 @@ export class LoginComponent {
     private route: Router,
     private _snackBar: MatSnackBar
   ) { }
+
+
+  ngOnInit() {
+    this.loginPayload.userName = "";
+    this.loginPayload.password = "";
+  }
 
   login() {
 
