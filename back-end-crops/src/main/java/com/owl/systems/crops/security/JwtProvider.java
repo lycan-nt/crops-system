@@ -17,13 +17,15 @@ import java.security.cert.CertificateException;
 public class JwtProvider {
 
     private KeyStore keyStore;
+    @Value("${jks.pass}")
+    private String jksPass;
 
     @PostConstruct
     public void init() {
         try {
-            keyStore = KeyStore.getInstance("JKS");
+            this.keyStore = KeyStore.getInstance("JKS");
             InputStream resourceAsStream = getClass().getResourceAsStream("/crops.jks");
-            keyStore.load(resourceAsStream, "131216".toCharArray());
+            this.keyStore.load(resourceAsStream, this.jksPass.toCharArray());
         } catch (KeyStoreException | IOException | NoSuchAlgorithmException | CertificateException e) {
             throw new RuntimeException(e);
         }
@@ -39,7 +41,7 @@ public class JwtProvider {
 
     private Key getPrivateKey() {
         try {
-            return (PrivateKey) keyStore.getKey("crops", "131216".toCharArray());
+            return (PrivateKey) this.keyStore.getKey("crops", this.jksPass.toCharArray());
         } catch (KeyStoreException e) {
             throw new RuntimeException(e);
         } catch (NoSuchAlgorithmException e) {
@@ -56,7 +58,7 @@ public class JwtProvider {
 
     private PublicKey getPublicKey() {
         try {
-            return keyStore.getCertificate("crops").getPublicKey();
+            return this.keyStore.getCertificate("crops").getPublicKey();
         } catch (KeyStoreException e) {
             throw new RuntimeException(e);
         }
