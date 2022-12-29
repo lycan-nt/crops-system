@@ -9,7 +9,7 @@ public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int cdEvent;
+    private Integer cdEvent;
 
     @Column
     private String nmEvent;
