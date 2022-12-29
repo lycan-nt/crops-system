@@ -17,15 +17,13 @@ import java.security.cert.CertificateException;
 public class JwtProvider {
 
     private KeyStore keyStore;
-    @Value("${jks.pass}")
-    private String jksPass;
 
     @PostConstruct
     public void init() {
         try {
-            this.keyStore = KeyStore.getInstance("JKS");
+            keyStore = KeyStore.getInstance("JKS");
             InputStream resourceAsStream = getClass().getResourceAsStream("/crops.jks");
-            this.keyStore.load(resourceAsStream, this.jksPass.toCharArray());
+            keyStore.load(resourceAsStream, "131216".toCharArray());
         } catch (KeyStoreException | IOException | NoSuchAlgorithmException | CertificateException e) {
             throw new RuntimeException(e);
         }
@@ -41,7 +39,7 @@ public class JwtProvider {
 
     private Key getPrivateKey() {
         try {
-            return (PrivateKey) this.keyStore.getKey("crops", this.jksPass.toCharArray());
+            return (PrivateKey) keyStore.getKey("crops", "131216".toCharArray());
         } catch (KeyStoreException e) {
             throw new RuntimeException(e);
         } catch (NoSuchAlgorithmException e) {
@@ -52,13 +50,13 @@ public class JwtProvider {
     }
 
     public boolean validateToken(String jwt) {
-        Jwts.parser().setSigningKey(getPublicKey()).parseClaimsJwt(jwt);
+        Jwts.parser().setSigningKey(getPublicKey()).parseClaimsJws(jwt);
         return true;
     }
 
     private PublicKey getPublicKey() {
         try {
-            return this.keyStore.getCertificate("crops").getPublicKey();
+            return keyStore.getCertificate("crops").getPublicKey();
         } catch (KeyStoreException e) {
             throw new RuntimeException(e);
         }
@@ -67,7 +65,7 @@ public class JwtProvider {
     public String getUserNameFromJwt(String jwt) {
         Claims claims = Jwts.parser()
                 .setSigningKey(getPublicKey())
-                .parseClaimsJwt(jwt)
+                .parseClaimsJws(jwt)
                 .getBody();
         return claims.getSubject();
     }
