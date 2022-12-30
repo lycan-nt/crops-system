@@ -5,8 +5,8 @@ import com.owl.systems.crops.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EventService {
@@ -16,5 +16,9 @@ public class EventService {
 
     public List<Event> findAll() {
         return this.eventRepository.findAll();
+    }
+
+    public Optional<Event> find(Integer idEvent) {
+        return this.eventRepository.findById(idEvent);
     }
 }
