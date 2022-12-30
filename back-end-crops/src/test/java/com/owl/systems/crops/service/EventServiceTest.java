@@ -2,9 +2,11 @@ package com.owl.systems.crops.service;
 
 import com.owl.systems.crops.model.Event;
 import com.owl.systems.crops.repository.EventRepository;
-import org.junit.Before;
+import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,20 +30,17 @@ public class EventServiceTest {
         }
     }
 
-    @Before
-    public void setup() {
-        prepareTestfindAllEvents();
-        prepareTestFindEvent();
-    }
-
     @Autowired
     private EventService eventService;
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     @MockBean
     private EventRepository eventRepository;
 
     @Test
-    public void testfindAllEvents() {
+    public void testfindAllEvents() throws Exception {
+        prepareTestfindAllEvents();
         Assertions.assertEquals(2, this.eventService.findAll().size());
     }
 
@@ -53,6 +52,7 @@ public class EventServiceTest {
 
     @Test
     public void testFindEvent() {
+        prepareTestFindEvent();
         int idEvent = 1;
         Event event = this.eventService.find(idEvent).get();
         Assertions.assertEquals("TDD", event.getNmEvent());
@@ -67,6 +67,15 @@ public class EventServiceTest {
         event.setPlaceEvent("Test");
         Mockito.when(this.eventRepository.findById(1))
                 .thenReturn(Optional.of(event));
+    }
+
+
+    @Test
+    public void finAllMustThrowNotContextException() throws Exception {
+        Exception exception = Assert.assertThrows(Exception.class, () -> {
+            this.eventService.findAll();
+        });
+        Assert.assertEquals("No records found.", exception.getMessage());
     }
 
 }

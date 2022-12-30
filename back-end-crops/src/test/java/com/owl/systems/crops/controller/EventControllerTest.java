@@ -17,8 +17,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RunWith(SpringRunner.class)
@@ -49,8 +50,27 @@ public class EventControllerTest {
     @Test
     @WithMockUser(username="tdd",roles={"ADMIN"})
     public void getAllEvents() throws Exception {
+        prepareTestfindAllEvents();
         this.mockMvc.perform(MockMvcRequestBuilders.get(this.baseURL))
                 .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    private void prepareTestfindAllEvents() {
+        Event event1 = new Event();
+        event1.setNmEvent("TDD");
+        event1.setCdEvent(1);
+        event1.setDtEvent(new Date());
+        event1.setTpEvent(1);
+        event1.setPlaceEvent("Test");
+        Event event2 = new Event();
+        event2.setNmEvent("TDD2");
+        event2.setCdEvent(2);
+        event2.setDtEvent(new Date());
+        event2.setTpEvent(2);
+        event2.setPlaceEvent("Test2");
+        List<Event> eventList = Arrays.asList(event1, event2);
+        Mockito.when(this.eventRepository.findAll())
+                .thenReturn(eventList);
     }
 
     @Test

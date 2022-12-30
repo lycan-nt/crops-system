@@ -26,7 +26,7 @@ public class EventController {
             @ApiResponse(code = 500, message = "Error in the request.")
     })
     @ApiOperation("Search all events.")
-    public ResponseEntity<List<Event>> findAll() {
+    public ResponseEntity<List<Event>> findAll() throws Exception {
         List<Event> eventList = this.eventService.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(eventList);
     }
