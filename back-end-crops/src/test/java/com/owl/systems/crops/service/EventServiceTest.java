@@ -80,25 +80,48 @@ public class EventServiceTest {
 
     @Test
     public void insertEvent() {
-        Event event = creatEventForTestInsert();
-        prepareTestInsertEvent(event);
+        Event event = creatEventForTests();
+        prepareTestInsertOrUpdateEvent(event);
         this.eventService.insert(event);
         Assertions.assertNotNull(event);
     }
 
-    private void prepareTestInsertEvent(Event event) {
+    private void prepareTestInsertOrUpdateEvent(Event event) {
         Mockito.when(this.eventRepository.save(event))
                 .thenReturn(event);
     }
 
-    private Event creatEventForTestInsert() {
+    private Event creatEventForTests() {
         Event event = new Event();
-        event.setCdEvent(0);
+        event.setCdEvent(1);
         event.setTpEvent(1);
         event.setDtEvent(new Date());
         event.setNmEvent("TDD Insert");
         event.setPlaceEvent("TDD TDD");
         return event;
+    }
+
+    @Test
+    public void updateEventTest() throws Exception {
+        prepareTestFindEvent();
+        Event event = creatEventForTests();
+        event.setNmEvent("Test For Update in TDD");
+        prepareTestInsertOrUpdateEvent(event);
+        this.eventService.update(event);
+        Assertions.assertEquals("Test For Update in TDD", event.getNmEvent());
+    }
+
+    @Test
+    public void exceptionForUpdateEventTestNotFound() throws Exception {
+        prepareTestFindEvent();
+        Event event = creatEventForTests();
+        event.setNmEvent("Test For Update in TDD");
+        event.setCdEvent(100);
+        prepareTestInsertOrUpdateEvent(event);
+        Exception exception = Assert.assertThrows(Exception.class, () -> {
+            this.eventService.update(event);
+        });
+        Assert.assertEquals("Event not found to update", exception.getMessage());
     }
 
 }

@@ -28,4 +28,11 @@ public class EventService {
     public Event insert(Event event) {
         return this.eventRepository.save(event);
     }
+
+    public Event update(Event event) throws Exception {
+        Optional<Event> eventUpdate = find(event.getCdEvent());
+        if (eventUpdate.isEmpty())
+            throw new Exception("Event not found to update");
+        return this.eventRepository.save(event);
+    }
 }
