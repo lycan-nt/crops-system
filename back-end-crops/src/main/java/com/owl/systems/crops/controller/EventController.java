@@ -61,4 +61,17 @@ public class EventController {
         return new ResponseEntity<Event>(event, HttpStatus.CREATED);
     }
 
+    @PutMapping("/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success in update the event"),
+            @ApiResponse(code = 403, message = "Unauthorized user"),
+            @ApiResponse(code = 500, message = "Error in the request")
+    })
+    @ApiOperation("Update the event")
+    public ResponseEntity<Event> update(
+            @ApiParam(value = "Event") @Valid @RequestBody Event event
+    ) {
+        return new ResponseEntity<Event>(event, HttpStatus.OK);
+    }
+
 }

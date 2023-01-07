@@ -99,7 +99,7 @@ public class EventControllerTest {
     @Test
     @WithMockUser(username = "tdd", roles = {"ADMIN"})
     public void insert() throws Exception {
-        Event event = creatEventForTestInsert();
+        Event event = eventForTests();
         this.mockMvc.perform(MockMvcRequestBuilders
                         .post(this.baseURL)
                         .with(SecurityMockMvcRequestPostProcessors.csrf())
@@ -109,9 +109,9 @@ public class EventControllerTest {
                     .andExpect(MockMvcResultMatchers.status().isCreated());
     }
 
-    private Event creatEventForTestInsert() {
+    private Event eventForTests() {
         Event event = new Event();
-        event.setCdEvent(0);
+        event.setCdEvent(1);
         event.setTpEvent(1);
         event.setDtEvent(new Date());
         event.setNmEvent("TDD Insert");
@@ -125,6 +125,22 @@ public class EventControllerTest {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Test
+    @WithMockUser(username = "tdd", roles = {"ADMIN"})
+    public void testUpdate() throws Exception {
+        Event event = eventForTests();
+        event.setNmEvent("Test For Update in TDD");
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .put(this.baseURL + "/{id}", event.getCdEvent())
+                    .content(asJsonString(event))
+                    .with(SecurityMockMvcRequestPostProcessors.csrf())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.nmEvent").value("Test For Update in TDD"));
     }
 
 }
