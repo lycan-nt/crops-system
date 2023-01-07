@@ -78,4 +78,31 @@ public class EventServiceTest {
         Assert.assertEquals("No records found.", exception.getMessage());
     }
 
+    @Test
+    public void insertEvent() {
+        prepareTestInsertEvent();
+        Event event2 = creatEventForTestInsert();
+        Event event3 = this.eventService.insert(event2);
+       // System.out.println("EVENT: " + event.getNmEvent());
+       // Assertions.assertTrue(event.getCdEvent() > 0);
+        Assertions.assertNotNull(event3);
+    }
+
+    private void prepareTestInsertEvent() {
+        Event event1 = creatEventForTestInsert();
+        //event.setCdEvent(1);
+        Mockito.when(this.eventRepository.save(event1))
+                .thenReturn(event1);
+    }
+
+    private Event creatEventForTestInsert() {
+        Event event = new Event();
+        event.setCdEvent(0);
+        event.setTpEvent(1);
+        event.setDtEvent(new Date());
+        event.setNmEvent("TDD Insert");
+        event.setPlaceEvent("TDD TDD");
+        return event;
+    }
+
 }

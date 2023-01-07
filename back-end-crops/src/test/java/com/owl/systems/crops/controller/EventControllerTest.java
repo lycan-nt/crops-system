@@ -1,5 +1,6 @@
 package com.owl.systems.crops.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.owl.systems.crops.model.Event;
 import com.owl.systems.crops.repository.EventRepository;
 import com.owl.systems.crops.service.EventService;
@@ -8,11 +9,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -90,6 +94,37 @@ public class EventControllerTest {
         event.setPlaceEvent("Test");
         Mockito.when(this.eventRepository.findById(1))
                 .thenReturn(Optional.of(event));
+    }
+
+    @Test
+    @WithMockUser(username = "tdd", roles = {"ADMIN"})
+    public void insert() throws Exception {
+        Event event = creatEventForTestInsert();
+        this.mockMvc.perform(MockMvcRequestBuilders
+                        .post(this.baseURL)
+                        .with(SecurityMockMvcRequestPostProcessors.csrf())
+                        .content(asJsonString(event))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(MockMvcResultMatchers.status().isCreated());
+    }
+
+    private Event creatEventForTestInsert() {
+        Event event = new Event();
+        event.setCdEvent(0);
+        event.setTpEvent(1);
+        event.setDtEvent(new Date());
+        event.setNmEvent("TDD Insert");
+        event.setPlaceEvent("TDD TDD");
+        return event;
+    }
+
+    private String asJsonString(Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

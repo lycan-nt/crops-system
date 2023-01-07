@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -43,6 +45,20 @@ public class EventController {
     ) {
         Event event = this.eventService.find(id).get();
         return ResponseEntity.status(HttpStatus.OK).body(event);
+    }
+
+    @PostMapping
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success in creating the event"),
+            @ApiResponse(code = 403, message = "Unauthorized user"),
+            @ApiResponse(code = 500, message = "Error in the request")
+    })
+    @ApiOperation("creating the event")
+    public ResponseEntity<Event> insert(
+            @ApiParam(value = "Event") @Valid @RequestBody Event event
+    ) {
+        this.eventService.insert(event);
+        return new ResponseEntity<Event>(event, HttpStatus.CREATED);
     }
 
 }

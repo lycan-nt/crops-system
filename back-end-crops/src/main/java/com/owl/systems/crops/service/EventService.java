@@ -23,4 +23,8 @@ public class EventService {
     public Optional<Event> find(Integer idEvent) {
         return this.eventRepository.findById(idEvent);
     }
+
+    public Event insert(Event event) {
+        return this.eventRepository.save(event);
+    }
 }
