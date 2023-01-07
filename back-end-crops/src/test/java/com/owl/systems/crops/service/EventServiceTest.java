@@ -80,19 +80,15 @@ public class EventServiceTest {
 
     @Test
     public void insertEvent() {
-        prepareTestInsertEvent();
-        Event event2 = creatEventForTestInsert();
-        Event event3 = this.eventService.insert(event2);
-       // System.out.println("EVENT: " + event.getNmEvent());
-       // Assertions.assertTrue(event.getCdEvent() > 0);
-        Assertions.assertNotNull(event3);
+        Event event = creatEventForTestInsert();
+        prepareTestInsertEvent(event);
+        this.eventService.insert(event);
+        Assertions.assertNotNull(event);
     }
 
-    private void prepareTestInsertEvent() {
-        Event event1 = creatEventForTestInsert();
-        //event.setCdEvent(1);
-        Mockito.when(this.eventRepository.save(event1))
-                .thenReturn(event1);
+    private void prepareTestInsertEvent(Event event) {
+        Mockito.when(this.eventRepository.save(event))
+                .thenReturn(event);
     }
 
     private Event creatEventForTestInsert() {

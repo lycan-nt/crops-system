@@ -1,6 +1,7 @@
 package com.owl.systems.crops.service;
 
 import com.owl.systems.crops.model.Event;
+import com.owl.systems.crops.model.User;
 import com.owl.systems.crops.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
