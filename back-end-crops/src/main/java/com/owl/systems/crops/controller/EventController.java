@@ -70,7 +70,8 @@ public class EventController {
     @ApiOperation("Update the event")
     public ResponseEntity<Event> update(
             @ApiParam(value = "Event") @Valid @RequestBody Event event
-    ) {
+    ) throws Exception {
+        this.eventService.update(event);
         return new ResponseEntity<Event>(event, HttpStatus.OK);
     }
 
