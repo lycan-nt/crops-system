@@ -143,4 +143,14 @@ public class EventControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.nmEvent").value("Test For Update in TDD"));
     }
 
+    @Test
+    @WithMockUser(username = "tdd", roles = {"ADMIN"})
+    public void testDelete() throws Exception {
+        int idEvent = 1;
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .delete(this.baseURL + "/{id}", idEvent)
+                .with(SecurityMockMvcRequestPostProcessors.csrf())
+            ).andExpect(MockMvcResultMatchers.status().isAccepted());
+    }
+
 }

@@ -75,4 +75,17 @@ public class EventController {
         return new ResponseEntity<Event>(event, HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success in delete the event"),
+            @ApiResponse(code = 200, message = "Unauthorized user"),
+            @ApiResponse(code = 200, message = "Error in the request")
+    })
+    @ApiOperation("Delete The Event")
+    public ResponseEntity<HttpStatus> delete(
+            @ApiParam(value = "Id Event")  @PathVariable("id") int id
+    ) {
+       return new ResponseEntity<HttpStatus>(HttpStatus.ACCEPTED);
+    }
+
 }
