@@ -35,4 +35,9 @@ public class EventService {
             throw new Exception("Event not found to update");
         return this.eventRepository.save(event);
     }
+
+    public void delete(int idEvent) {
+        find(idEvent);
+        this.eventRepository.deleteById(idEvent);
+    }
 }

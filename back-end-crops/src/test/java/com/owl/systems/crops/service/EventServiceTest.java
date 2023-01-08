@@ -52,20 +52,20 @@ public class EventServiceTest {
 
     @Test
     public void testFindEvent() {
-        prepareTestFindEvent();
         int idEvent = 1;
+        prepareTestFindEvent(idEvent);
         Event event = this.eventService.find(idEvent).get();
         Assertions.assertEquals("TDD", event.getNmEvent());
     }
 
-    private void prepareTestFindEvent() {
+    private void prepareTestFindEvent(int idEvent) {
         Event event = new Event();
         event.setNmEvent("TDD");
         event.setCdEvent(1);
         event.setDtEvent(new Date());
         event.setTpEvent(1);
         event.setPlaceEvent("Test");
-        Mockito.when(this.eventRepository.findById(1))
+        Mockito.when(this.eventRepository.findById(idEvent))
                 .thenReturn(Optional.of(event));
     }
 
@@ -103,7 +103,8 @@ public class EventServiceTest {
 
     @Test
     public void updateEventTest() throws Exception {
-        prepareTestFindEvent();
+        int idEvent = 1;
+        prepareTestFindEvent(idEvent);
         Event event = creatEventForTests();
         event.setNmEvent("Test For Update in TDD");
         prepareTestInsertOrUpdateEvent(event);
@@ -113,7 +114,8 @@ public class EventServiceTest {
 
     @Test
     public void exceptionForUpdateEventTestNotFound() throws Exception {
-        prepareTestFindEvent();
+        int idEvent = 1;
+        prepareTestFindEvent(idEvent);
         Event event = creatEventForTests();
         event.setNmEvent("Test For Update in TDD");
         event.setCdEvent(100);
@@ -122,6 +124,19 @@ public class EventServiceTest {
             this.eventService.update(event);
         });
         Assert.assertEquals("Event not found to update", exception.getMessage());
+    }
+
+    @Test
+    public void deleteEvent() {
+        int idEvent = 1;
+        prepareTestDelete(idEvent);
+        this.eventService.delete(idEvent);
+        Mockito.verify(this.eventRepository, Mockito.times(1)).deleteById(idEvent);
+    }
+
+    private void prepareTestDelete(int idEvent) {
+        prepareTestFindEvent(idEvent);
+        Mockito.doNothing().when(this.eventRepository).deleteById(idEvent);
     }
 
 }
