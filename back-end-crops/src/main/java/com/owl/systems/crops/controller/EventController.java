@@ -42,8 +42,8 @@ public class EventController {
     @ApiOperation("Search event")
     public ResponseEntity<Event> find(
            @ApiParam(value = "event id") @PathVariable("id") Integer id
-    ) {
-        Event event = this.eventService.find(id).get();
+    ) throws Exception {
+        Event event = this.eventService.find(id);
         return ResponseEntity.status(HttpStatus.OK).body(event);
     }
 
@@ -84,8 +84,9 @@ public class EventController {
     @ApiOperation("Delete The Event")
     public ResponseEntity<HttpStatus> delete(
             @ApiParam(value = "Id Event")  @PathVariable("id") int id
-    ) {
-       return new ResponseEntity<HttpStatus>(HttpStatus.ACCEPTED);
+    ) throws Exception {
+        this.eventService.delete(id);
+        return new ResponseEntity<HttpStatus>(HttpStatus.ACCEPTED);
     }
 
 }

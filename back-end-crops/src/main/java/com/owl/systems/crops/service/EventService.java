@@ -1,7 +1,6 @@
 package com.owl.systems.crops.service;
 
 import com.owl.systems.crops.model.Event;
-import com.owl.systems.crops.model.User;
 import com.owl.systems.crops.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,8 +20,9 @@ public class EventService {
         return eventList;
     }
 
-    public Optional<Event> find(Integer idEvent) {
-        return this.eventRepository.findById(idEvent);
+    public Event find(Integer idEvent) throws Exception {
+        Optional<Event> obj =  this.eventRepository.findById(idEvent);
+        return obj.orElseThrow(() -> new Exception("Event not found"));
     }
 
     public Event insert(Event event) {
@@ -30,13 +30,11 @@ public class EventService {
     }
 
     public Event update(Event event) throws Exception {
-        Optional<Event> eventUpdate = find(event.getCdEvent());
-        if (eventUpdate.isEmpty())
-            throw new Exception("Event not found to update");
+        find(event.getCdEvent());
         return this.eventRepository.save(event);
     }
 
-    public void delete(int idEvent) {
+    public void delete(int idEvent) throws Exception {
         find(idEvent);
         this.eventRepository.deleteById(idEvent);
     }

@@ -51,10 +51,10 @@ public class EventServiceTest {
     }
 
     @Test
-    public void testFindEvent() {
+    public void testFindEvent() throws Exception {
         int idEvent = 1;
         prepareTestFindEvent(idEvent);
-        Event event = this.eventService.find(idEvent).get();
+        Event event = this.eventService.find(idEvent);
         Assertions.assertEquals("TDD", event.getNmEvent());
     }
 
@@ -71,7 +71,7 @@ public class EventServiceTest {
 
 
     @Test
-    public void finAllMustThrowNotContextException() throws Exception {
+    public void findAllMustThrowNotContextException() throws Exception {
         Exception exception = Assert.assertThrows(Exception.class, () -> {
             this.eventService.findAll();
         });
@@ -123,11 +123,11 @@ public class EventServiceTest {
         Exception exception = Assert.assertThrows(Exception.class, () -> {
             this.eventService.update(event);
         });
-        Assert.assertEquals("Event not found to update", exception.getMessage());
+        Assert.assertEquals("Event not found", exception.getMessage());
     }
 
     @Test
-    public void deleteEvent() {
+    public void deleteEvent() throws Exception {
         int idEvent = 1;
         prepareTestDelete(idEvent);
         this.eventService.delete(idEvent);
