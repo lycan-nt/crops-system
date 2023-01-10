@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.*;
 import java.security.cert.CertificateException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 @Service
 public class JwtProvider {
@@ -19,6 +22,8 @@ public class JwtProvider {
     private KeyStore keyStore;
     @Value("${jks.pass}")
     private String jksPass;
+    @Value("${jwt.expiration}")
+    private String EXPIRATION_TIME;
 
     @PostConstruct
     public void init() {
@@ -35,6 +40,12 @@ public class JwtProvider {
         User user = (User) authentication.getPrincipal();
         return Jwts.builder()
                 .setSubject(user.getUsername())
+                .setIssuedAt(new Date())
+                .setExpiration(
+                        Date.from(
+                                LocalDateTime.now().plusMinutes(Long.parseLong(this.EXPIRATION_TIME))
+                                        .atZone(ZoneId.systemDefault())
+                                        .toInstant()))
                 .signWith(getPrivateKey())
                 .compact();
     }
