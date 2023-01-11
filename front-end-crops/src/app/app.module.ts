@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { LoginComponent } from './views/auth/components/login/login.component';
 import { RegisterComponent } from './views/auth/components/register/register.component';
 import { AuthComponent } from './views/auth/auth.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { HeaderComponent } from './views/header/header.component';
@@ -24,6 +24,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { HomeComponent } from './views/home/home.component';
 import { EventsComponent } from './views/events/events.component';
+import { HttpClientInterceptor } from './views/guards/http-client-interceptor';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,7 @@ import { EventsComponent } from './views/events/events.component';
     ]),
     BrowserAnimationsModule
   ],
-  providers: [AuthGuardService],
+  providers: [AuthGuardService, {provide: HTTP_INTERCEPTORS, useClass: HttpClientInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
