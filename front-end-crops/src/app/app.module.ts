@@ -25,6 +25,7 @@ import { MatListModule } from '@angular/material/list';
 import { HomeComponent } from './views/home/home.component';
 import { EventsComponent } from './views/events/events.component';
 import { HttpClientInterceptor } from './views/guards/http-client-interceptor';
+import {MaterialModule} from "../material-module";
 
 @NgModule({
   declarations: [
@@ -38,20 +39,11 @@ import { HttpClientInterceptor } from './views/guards/http-client-interceptor';
     EventsComponent
   ],
   imports: [
+    MaterialModule,
     BrowserModule,
-    MatCardModule,
-    MatTabsModule,
-    MatInputModule,
-    MatButtonModule,
     FormsModule,
-    MatIconModule,
     HttpClientModule,
     NgxWebstorageModule.forRoot(),
-    MatSnackBarModule,
-    MatToolbarModule,
-    MatTooltipModule,
-    MatSidenavModule,
-    MatListModule,
     RouterModule.forRoot([
       {path: 'header', component: HeaderComponent},
       {path: 'login', component: AuthComponent},
