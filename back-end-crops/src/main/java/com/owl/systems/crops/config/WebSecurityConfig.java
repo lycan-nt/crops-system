@@ -33,16 +33,15 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable().authorizeRequests()
+                .cors().and().csrf().disable()
+                .authorizeRequests()
                 .antMatchers("/api/auth/**")
                 .permitAll()
                 .antMatchers("/v2/api-docs/**", "/swagger-ui.html", "/swagger-ui/**",  "/swagger-resources/**", "/swagger-resources")
                 .permitAll()
                 .anyRequest()
                 .authenticated();
-
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
 

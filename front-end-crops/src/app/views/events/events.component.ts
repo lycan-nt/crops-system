@@ -1,20 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
+import { EventService } from '../service/event-service.service';
 
 @Component({
   selector: 'app-events',
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.css']
 })
-export class EventsComponent {
+export class EventsComponent implements OnInit{
+
+
 
 constructor(
-  public auth: AuthService
+  public auth: AuthService,
+  private eventService: EventService
 ) {}
+
+ngOnInit(): void {
+  console.log("IN THIS ON INIT")
+    this.eventService.findAll().subscribe((events: Event[]) => {
+      console.table(events);
+    })
+}
 
 displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
 dataSource = ELEMENT_DATA;
-
 
 }
 

@@ -11,7 +11,9 @@ export class HttpClientInterceptor implements HttpClientInterceptor {
     ) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler) : Observable<HttpEvent<any>> {
+        console.log("INTERCEPTOR....");
         const token = this.$localStorage.retrieve("authenticationToken");
+        console.log("TOKEN: " + token);
         if (token) {
             const cloned = req.clone({
                 headers: req.headers.set("Authorization", "Bearer " + token)

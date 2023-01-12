@@ -6,7 +6,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
-
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStream;
