@@ -1,4 +1,4 @@
-export class Event {
+export class EventDTO {
     cdEvent!: Number;
     nmEvent!: string;
     dtEvent!: Date;

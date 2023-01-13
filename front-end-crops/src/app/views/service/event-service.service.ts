@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { EventDTO } from '../model/event';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,9 @@ export class EventService {
     private httpClient: HttpClient
   ) { }
 
-  findAll() : Observable<Event[]> {
+  findAll() : Observable<EventDTO[]> {
     console.log("FINDALL")
-    return this.httpClient.get<Event[]>(this.apiUrl);
+    return this.httpClient.get<EventDTO[]>(this.apiUrl);
   }
 
 }

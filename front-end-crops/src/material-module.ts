@@ -12,6 +12,7 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatFormFieldModule } from "@angular/material/form-field";
 
 @NgModule({
     exports: [
@@ -28,6 +29,8 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
         MatTooltipModule,
         MatSidenavModule,
         MatListModule,
+        MatFormFieldModule,
+        MatInputModule
     ]
 })
 export class MaterialModule {
