@@ -4,6 +4,7 @@ import { LocalStorageService } from 'ngx-webstorage';
 import { LoginPayload } from './login-payload';
 import { map, Observable } from 'rxjs';
 import { JwtAuthResponse } from './jwt-auth-response';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +12,13 @@ import { JwtAuthResponse } from './jwt-auth-response';
 export class AuthService {
 
   private url = "http://localhost:8080/api/auth/";
-
+  private jwtHelper = new JwtHelperService()
   constructor(
     private httpClient: HttpClient,
     private localStorageService: LocalStorageService
   ) { }
 
-  login(loginPayload: LoginPayload) :  Observable<boolean> {
+  login(loginPayload: LoginPayload): Observable<boolean> {
     return this.httpClient.post<JwtAuthResponse>(this.url + 'login', loginPayload).pipe(map(data => {
       this.localStorageService.store('authenticationToken', data.authenticationToken);
       this.localStorageService.store('userName', data.userName);
@@ -26,7 +27,16 @@ export class AuthService {
   }
 
   isAuthentication(): boolean {
-    return this.localStorageService.retrieve("userName") != null;
+
+    if (this.localStorageService.retrieve("userName") != null
+      && !this.jwtHelper.isTokenExpired(this.localStorageService.retrieve('authenticationToken'))) {
+      return true;
+    } else {
+      this.localStorageService.clear('authenticationToken');
+      this.localStorageService.clear('userName');
+      return false;
+    }
+
   }
 
   logout() {
