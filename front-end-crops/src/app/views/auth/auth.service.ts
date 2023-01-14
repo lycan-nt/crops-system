@@ -5,6 +5,7 @@ import { LoginPayload } from './login-payload';
 import { map, Observable } from 'rxjs';
 import { JwtAuthResponse } from './jwt-auth-response';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class AuthService {
   private jwtHelper = new JwtHelperService()
   constructor(
     private httpClient: HttpClient,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private _snackBar: MatSnackBar
   ) { }
 
   login(loginPayload: LoginPayload): Observable<boolean> {
