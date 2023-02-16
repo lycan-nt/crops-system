@@ -155,10 +155,14 @@ public class EventControllerTest {
     @Test
     @WithMockUser(username = "tdd", roles = {"ADMIN"})
     public void findAllFilterTest() throws Exception {
-        String nameEvent = "TDD Insert";
+        int typeEvento = 1;
+        String fromDate = "2023-02-15 00:00:00";
+        String toDate = "2023-02-15 23:59:59";
         this.mockMvc.perform(MockMvcRequestBuilders
-                .get(this.baseURL + "/filters")
-                .param("nameEvent", nameEvent)
+                        .get(this.baseURL + "/filters")
+                        .param("typeEvento", String.valueOf(typeEvento))
+                        .param("fromDate", fromDate)
+                        .param("toDate", toDate)
                 .with(SecurityMockMvcRequestPostProcessors.csrf())
         ).andExpect(MockMvcResultMatchers.status().isOk());
     }

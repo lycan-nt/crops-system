@@ -7,12 +7,14 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -21,6 +23,7 @@ public class EventController {
 
     @Autowired
     private EventService eventService;
+    private final String DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
     @GetMapping
     @ApiResponses(value = {
@@ -42,8 +45,13 @@ public class EventController {
     })
     @ApiOperation("Search all events by filters.")
     public ResponseEntity<List<Event>> findAllByFilters(
-            @ApiParam(value = "Name Event") @RequestParam(name = "nameEvent") String nameEvent
-    ) {
+            @ApiParam(value = "Type Event") @RequestParam(required = false, name = "typeEvento") int typeEvent,
+            @ApiParam(value = "Initial Date") @RequestParam(required = false, name = "fromDate")
+            @DateTimeFormat(pattern = DATE_PATTERN) Date fromDate,
+            @ApiParam(value = "Final Date") @RequestParam(required = false, name = "toDate")
+            @DateTimeFormat(pattern = DATE_PATTERN) Date toDate
+            )
+    {
         List<Event> eventList = new ArrayList<Event>();
         return ResponseEntity.status(HttpStatus.OK).body(eventList);
     }
