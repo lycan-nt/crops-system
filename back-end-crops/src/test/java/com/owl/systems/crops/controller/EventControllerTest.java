@@ -152,4 +152,15 @@ public class EventControllerTest {
             ).andExpect(MockMvcResultMatchers.status().isAccepted());
     }
 
+    @Test
+    @WithMockUser(username = "tdd", roles = {"ADMIN"})
+    public void findAllFilterTest() throws Exception {
+        String nameEvent = "TDD Insert";
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .get(this.baseURL + "/filters")
+                .param("nameEvent", nameEvent)
+                .with(SecurityMockMvcRequestPostProcessors.csrf())
+        ).andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
 }

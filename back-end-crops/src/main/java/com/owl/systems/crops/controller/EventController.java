@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -30,6 +31,20 @@ public class EventController {
     @ApiOperation("Search all events.")
     public ResponseEntity<List<Event>> findAll() throws Exception {
         List<Event> eventList = this.eventService.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(eventList);
+    }
+
+    @GetMapping("/filters")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully fetched events."),
+            @ApiResponse(code = 403, message = "Unauthorized user."),
+            @ApiResponse(code = 500, message = "Error in the request.")
+    })
+    @ApiOperation("Search all events by filters.")
+    public ResponseEntity<List<Event>> findAllByFilters(
+            @ApiParam(value = "Name Event") @RequestParam(name = "nameEvent") String nameEvent
+    ) {
+        List<Event> eventList = new ArrayList<Event>();
         return ResponseEntity.status(HttpStatus.OK).body(eventList);
     }
 
