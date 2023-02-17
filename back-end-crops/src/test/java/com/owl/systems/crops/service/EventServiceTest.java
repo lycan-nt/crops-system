@@ -1,7 +1,9 @@
 package com.owl.systems.crops.service;
 
+import com.owl.systems.crops.builder.EventSearchBuilder;
 import com.owl.systems.crops.model.Event;
-import com.owl.systems.crops.repository.EventRepository;
+import com.owl.systems.crops.repository.Event.EventRepository;
+import com.owl.systems.crops.repository.Event.EventSearchFilters;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -37,6 +39,8 @@ public class EventServiceTest {
 
     @MockBean
     private EventRepository eventRepository;
+    @MockBean
+    private EventSearchFilters eventSearchFilters;
 
     @Test
     public void testfindAllEvents() throws Exception {
@@ -139,4 +143,20 @@ public class EventServiceTest {
         Mockito.doNothing().when(this.eventRepository).deleteById(idEvent);
     }
 
+    @Test
+    public void findAllEventsByFiltersTest() {
+        EventSearchBuilder eventSearchBuilder = EventSearchBuilder.builder()
+                .typeEvent(1)
+                .fromDate(new Date())
+                .toDate(new Date())
+                .build();
+        prepareFindAllEventsByFiltersTest(eventSearchBuilder);
+        Assertions.assertEquals(3, this.eventService.findAllByFilter(eventSearchBuilder).size());
+    }
+
+    private void prepareFindAllEventsByFiltersTest(EventSearchBuilder eventSearchBuilder) {
+        List<Event> eventList = Arrays.asList(new Event(), new Event(), new Event());
+        Mockito.when(this.eventSearchFilters.findAllByFilter(eventSearchBuilder))
+                .thenReturn(eventList);
+    }
 }

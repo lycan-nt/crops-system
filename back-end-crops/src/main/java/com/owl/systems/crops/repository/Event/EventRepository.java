@@ -1,4 +1,4 @@
-package com.owl.systems.crops.repository;
+package com.owl.systems.crops.repository.Event;
 
 import com.owl.systems.crops.model.Event;
 import org.springframework.data.jpa.repository.JpaRepository;

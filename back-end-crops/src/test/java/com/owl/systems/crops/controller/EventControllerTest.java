@@ -2,7 +2,7 @@ package com.owl.systems.crops.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.owl.systems.crops.model.Event;
-import com.owl.systems.crops.repository.EventRepository;
+import com.owl.systems.crops.repository.Event.EventRepository;
 import com.owl.systems.crops.service.EventService;
 import org.junit.Before;
 import org.junit.Test;
