@@ -46,7 +46,7 @@ public class EventService {
     }
 
     public List<Event> findAllByFilter(EventSearchBuilder eventSearchBuilder) {
-        List<Event> eventList = this.eventSearchFilters.findAllByFilter(eventSearchBuilder);
+        List<Event> eventList = this.eventSearchFilters.find(eventSearchBuilder);
         return eventList;
     }
 }

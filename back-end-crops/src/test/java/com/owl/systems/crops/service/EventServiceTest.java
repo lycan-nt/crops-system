@@ -156,7 +156,7 @@ public class EventServiceTest {
 
     private void prepareFindAllEventsByFiltersTest(EventSearchBuilder eventSearchBuilder) {
         List<Event> eventList = Arrays.asList(new Event(), new Event(), new Event());
-        Mockito.when(this.eventSearchFilters.findAllByFilter(eventSearchBuilder))
+        Mockito.when(this.eventSearchFilters.find(eventSearchBuilder))
                 .thenReturn(eventList);
     }
 }

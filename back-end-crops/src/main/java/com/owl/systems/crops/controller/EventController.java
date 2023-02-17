@@ -1,5 +1,6 @@
 package com.owl.systems.crops.controller;
 
+import com.owl.systems.crops.builder.EventSearchBuilder;
 import com.owl.systems.crops.model.Event;
 import com.owl.systems.crops.service.EventService;
 import io.swagger.annotations.ApiOperation;
@@ -45,14 +46,17 @@ public class EventController {
     })
     @ApiOperation("Search all events by filters.")
     public ResponseEntity<List<Event>> findAllByFilters(
-            @ApiParam(value = "Type Event") @RequestParam(required = false, name = "typeEvento") int typeEvent,
+            @ApiParam(value = "Type Event") @RequestParam(required = false, name = "typeEvento") Integer typeEvent,
             @ApiParam(value = "Initial Date") @RequestParam(required = false, name = "fromDate")
             @DateTimeFormat(pattern = DATE_PATTERN) Date fromDate,
             @ApiParam(value = "Final Date") @RequestParam(required = false, name = "toDate")
             @DateTimeFormat(pattern = DATE_PATTERN) Date toDate
             )
     {
+        System.out.println("HERE CONTROLER <<<<<<<<<<<<<<<");
         List<Event> eventList = new ArrayList<Event>();
+        EventSearchBuilder eventSearchBuilder = new EventSearchBuilder();
+        this.eventService.findAllByFilter(eventSearchBuilder);
         return ResponseEntity.status(HttpStatus.OK).body(eventList);
     }
 
