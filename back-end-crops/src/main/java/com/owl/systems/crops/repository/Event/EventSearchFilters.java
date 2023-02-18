@@ -29,6 +29,7 @@ public class EventSearchFilters {
     private Predicate filtrar(Root root, CriteriaBuilder criteriaBuilder, EventSearchCriterios eventSearchCriterios) {
         Predicate predicateFilter = new PredicateBuilder(criteriaBuilder)
                 .equalIntegerRoot(root,"tpEvent", eventSearchCriterios.getTypeEvent(), eventSearchCriterios.getTypeEvent() != null)
+                .greaterDateRoot(root,"dtEvent", eventSearchCriterios.getFromDate(), eventSearchCriterios.getFromDate() != null)
                 .build();
         return predicateFilter;
     }

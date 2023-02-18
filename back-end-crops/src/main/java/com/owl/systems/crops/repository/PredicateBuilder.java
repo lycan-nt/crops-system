@@ -5,6 +5,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.Date;
 
 @Service
 public class PredicateBuilder {
@@ -27,6 +28,18 @@ public class PredicateBuilder {
     public PredicateBuilder equalIntegerJoin(Join join, String colum, Integer value, boolean condition) {
         if(condition)
             this.predicateFilter = this.criteriaBuilder.and(this.predicateFilter, this.criteriaBuilder.equal(join.get(colum), value));
+        return this;
+    }
+
+    public PredicateBuilder greaterDateRoot(Root root, String colum, Date value, boolean condition) {
+        if(condition)
+            this.predicateFilter = this.criteriaBuilder.and(this.predicateFilter, this.criteriaBuilder.greaterThanOrEqualTo(root.get(colum), value));
+        return this;
+    }
+
+    public PredicateBuilder greaterDateJoin(Join join, String colum, Date value, boolean condition) {
+        if(condition)
+            this.predicateFilter = this.criteriaBuilder.and(this.predicateFilter, this.criteriaBuilder.greaterThanOrEqualTo(join.get(colum), value));
         return this;
     }
 
