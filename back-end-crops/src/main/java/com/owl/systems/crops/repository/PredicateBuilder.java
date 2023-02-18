@@ -43,6 +43,18 @@ public class PredicateBuilder {
         return this;
     }
 
+    public PredicateBuilder lessDateRoot(Root root, String colum, Date value, boolean condition) {
+        if(condition)
+            this.predicateFilter = this.criteriaBuilder.and(this.predicateFilter, this.criteriaBuilder.lessThanOrEqualTo(root.get(colum), value));
+        return this;
+    }
+
+    public PredicateBuilder lessDateJoin(Join join, String colum, Date value, boolean condition) {
+        if(condition)
+            this.predicateFilter = this.criteriaBuilder.and(this.predicateFilter, this.criteriaBuilder.lessThanOrEqualTo(join.get(colum), value));
+        return this;
+    }
+
     public Predicate build() {
         return this.predicateFilter;
     }

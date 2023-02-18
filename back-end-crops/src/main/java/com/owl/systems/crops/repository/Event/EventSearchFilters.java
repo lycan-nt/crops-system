@@ -30,6 +30,7 @@ public class EventSearchFilters {
         Predicate predicateFilter = new PredicateBuilder(criteriaBuilder)
                 .equalIntegerRoot(root,"tpEvent", eventSearchCriterios.getTypeEvent(), eventSearchCriterios.getTypeEvent() != null)
                 .greaterDateRoot(root,"dtEvent", eventSearchCriterios.getFromDate(), eventSearchCriterios.getFromDate() != null)
+                .lessDateRoot(root, "dtEvent", eventSearchCriterios.getToDate(), eventSearchCriterios.getToDate() != null)
                 .build();
         return predicateFilter;
     }
