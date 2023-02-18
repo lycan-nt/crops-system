@@ -160,7 +160,7 @@ public class EventControllerTest {
         String toDate = "2023-02-15 23:59:59";
         this.mockMvc.perform(MockMvcRequestBuilders
                         .get(this.baseURL + "/filters")
-                        .param("typeEvento", String.valueOf(typeEvento))
+                        .param("typeEvent", String.valueOf(typeEvento))
                         .param("fromDate", fromDate)
                         .param("toDate", toDate)
                 .with(SecurityMockMvcRequestPostProcessors.csrf())

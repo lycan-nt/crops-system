@@ -1,6 +1,6 @@
 package com.owl.systems.crops.controller;
 
-import com.owl.systems.crops.builder.EventSearchBuilder;
+import com.owl.systems.crops.builder.EventSearchCriterios;
 import com.owl.systems.crops.model.Event;
 import com.owl.systems.crops.service.EventService;
 import io.swagger.annotations.ApiOperation;
@@ -8,6 +8,10 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,19 +49,27 @@ public class EventController {
             @ApiResponse(code = 500, message = "Error in the request.")
     })
     @ApiOperation("Search all events by filters.")
-    public ResponseEntity<List<Event>> findAllByFilters(
-            @ApiParam(value = "Type Event") @RequestParam(required = false, name = "typeEvento") Integer typeEvent,
+    public ResponseEntity<Page<Event>> findAllByFilters(
+            @ApiParam(value = "Type Event") @RequestParam(required = false, name = "typeEvent") Integer typeEvent,
             @ApiParam(value = "Initial Date") @RequestParam(required = false, name = "fromDate")
             @DateTimeFormat(pattern = DATE_PATTERN) Date fromDate,
             @ApiParam(value = "Final Date") @RequestParam(required = false, name = "toDate")
-            @DateTimeFormat(pattern = DATE_PATTERN) Date toDate
-            )
+            @DateTimeFormat(pattern = DATE_PATTERN) Date toDate,
+            @ApiParam(value = "Values for Pagination") @PageableDefault(
+                    direction = Sort.Direction.DESC,
+                    page = 0,
+                    size = 10
+            ) Pageable pageable
+        )
     {
-        System.out.println("HERE CONTROLER <<<<<<<<<<<<<<<");
-        List<Event> eventList = new ArrayList<Event>();
-        EventSearchBuilder eventSearchBuilder = new EventSearchBuilder();
-        this.eventService.findAllByFilter(eventSearchBuilder);
-        return ResponseEntity.status(HttpStatus.OK).body(eventList);
+        EventSearchCriterios eventSearchCriterios = EventSearchCriterios.builder()
+                .typeEvent(typeEvent)
+                .fromDate(fromDate)
+                .toDate(toDate)
+                .pageable(pageable)
+                .build();
+        Page<Event> eventListPaged = this.eventService.findAllByFilter(eventSearchCriterios);
+        return ResponseEntity.status(HttpStatus.OK).body(eventListPaged);
     }
 
     @GetMapping("/{id}")

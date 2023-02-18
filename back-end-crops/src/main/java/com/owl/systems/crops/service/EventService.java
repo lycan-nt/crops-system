@@ -1,13 +1,12 @@
 package com.owl.systems.crops.service;
 
-import com.owl.systems.crops.builder.EventSearchBuilder;
+import com.owl.systems.crops.builder.EventSearchCriterios;
 import com.owl.systems.crops.model.Event;
 import com.owl.systems.crops.repository.Event.EventRepository;
 import com.owl.systems.crops.repository.Event.EventSearchFilters;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,8 +44,8 @@ public class EventService {
         this.eventRepository.deleteById(idEvent);
     }
 
-    public List<Event> findAllByFilter(EventSearchBuilder eventSearchBuilder) {
-        List<Event> eventList = this.eventSearchFilters.find(eventSearchBuilder);
-        return eventList;
+    public Page<Event> findAllByFilter(EventSearchCriterios eventSearchCriterios) {
+        Page<Event> eventListPaged = this.eventSearchFilters.findAllByFilter(eventSearchCriterios);
+        return eventListPaged;
     }
 }

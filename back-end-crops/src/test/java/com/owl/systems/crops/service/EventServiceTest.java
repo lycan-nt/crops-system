@@ -1,6 +1,6 @@
 package com.owl.systems.crops.service;
 
-import com.owl.systems.crops.builder.EventSearchBuilder;
+import com.owl.systems.crops.builder.EventSearchCriterios;
 import com.owl.systems.crops.model.Event;
 import com.owl.systems.crops.repository.Event.EventRepository;
 import com.owl.systems.crops.repository.Event.EventSearchFilters;
@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.test.context.junit4.SpringRunner;
 import java.util.Arrays;
 import java.util.Date;
@@ -145,18 +147,19 @@ public class EventServiceTest {
 
     @Test
     public void findAllEventsByFiltersTest() {
-        EventSearchBuilder eventSearchBuilder = EventSearchBuilder.builder()
+        EventSearchCriterios eventSearchCriterios = EventSearchCriterios.builder()
                 .typeEvent(1)
                 .fromDate(new Date())
                 .toDate(new Date())
                 .build();
-        prepareFindAllEventsByFiltersTest(eventSearchBuilder);
-        Assertions.assertEquals(3, this.eventService.findAllByFilter(eventSearchBuilder).size());
+        prepareFindAllEventsByFiltersTest(eventSearchCriterios);
+        Assertions.assertEquals(3, this.eventService.findAllByFilter(eventSearchCriterios).getTotalElements());
     }
 
-    private void prepareFindAllEventsByFiltersTest(EventSearchBuilder eventSearchBuilder) {
+    private void prepareFindAllEventsByFiltersTest(EventSearchCriterios eventSearchCriterios) {
         List<Event> eventList = Arrays.asList(new Event(), new Event(), new Event());
-        Mockito.when(this.eventSearchFilters.find(eventSearchBuilder))
-                .thenReturn(eventList);
+        Page<Event> eventListPaged = new PageImpl<>(eventList, eventSearchCriterios.getPageable(), eventList.size());
+        Mockito.when(this.eventSearchFilters.findAllByFilter(eventSearchCriterios))
+                .thenReturn(eventListPaged);
     }
 }
