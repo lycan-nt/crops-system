@@ -3,6 +3,7 @@ package com.owl.systems.crops.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.owl.systems.crops.model.Event;
 import com.owl.systems.crops.repository.Event.EventRepository;
+import com.owl.systems.crops.repository.Event.EventSearchFilters;
 import com.owl.systems.crops.service.EventService;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,6 +36,8 @@ public class EventControllerTest {
         public EventService eventService() {
             return new EventService();
         }
+        @Bean
+        EventSearchFilters eventSearchFilters() { return new EventSearchFilters(); }
     }
 
     @Before
