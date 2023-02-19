@@ -1,13 +1,12 @@
 package com.owl.systems.crops.repository.Event;
 
+import com.owl.library.repositorys.PredicateSearchBuilder;
 import com.owl.systems.crops.builder.EventSearchCriterios;
 import com.owl.systems.crops.model.Event;
-import com.owl.systems.crops.repository.PredicateBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -27,7 +26,7 @@ public class EventSearchFilters {
     }
 
     private Predicate filtrar(Root root, CriteriaBuilder criteriaBuilder, EventSearchCriterios eventSearchCriterios) {
-        Predicate predicateFilter = new PredicateBuilder(criteriaBuilder)
+        Predicate predicateFilter = new PredicateSearchBuilder(criteriaBuilder)
                 .equalIntegerRoot(root,"tpEvent", eventSearchCriterios.getTypeEvent(), eventSearchCriterios.getTypeEvent() != null)
                 .greaterDateRoot(root,"dtEvent", eventSearchCriterios.getFromDate(), eventSearchCriterios.getFromDate() != null)
                 .lessDateRoot(root, "dtEvent", eventSearchCriterios.getToDate(), eventSearchCriterios.getToDate() != null)
