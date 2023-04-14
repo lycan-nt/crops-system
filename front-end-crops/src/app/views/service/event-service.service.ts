@@ -15,7 +15,6 @@ export class EventService {
   ) { }
 
   findAll() : Observable<EventDTO[]> {
-    console.log("FINDALL")
     return this.httpClient.get<EventDTO[]>(this.apiUrl);
   }
 

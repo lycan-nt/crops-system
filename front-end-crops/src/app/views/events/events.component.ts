@@ -19,7 +19,7 @@ export class EventsComponent implements OnInit {
   searchKey!: string;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort; 
-
+ 
   constructor(
     public auth: AuthService,
     private eventService: EventService
@@ -51,6 +51,11 @@ export class EventsComponent implements OnInit {
 
   deleteEvent(row: any) {
     console.log('Delete: ' , row);
+  }
+
+  onSearchClear() {
+    this.searchKey = "";
+    this.findAll();
   }
 
 }

@@ -17,21 +17,19 @@ public class EventSearchFilters {
     private EventRepository eventRepository;
 
     public Page<Event> findAllByFilter(EventSearchCriterios eventSearchCriterios) {
-        Page<Event> eventListPaged = this.eventRepository.findAll((Specification<Event>) (root, criteriaQuery, criteriaBuilder) -> {
+        return this.eventRepository.findAll((Specification<Event>) (root, criteriaQuery, criteriaBuilder) -> {
             Predicate predicate = filtrar(root, criteriaBuilder, eventSearchCriterios);
             criteriaQuery.orderBy(criteriaBuilder.desc(root.get("dtEvent")));
             return predicate;
         }, eventSearchCriterios.getPageable());
-        return eventListPaged;
     }
 
     private Predicate filtrar(Root root, CriteriaBuilder criteriaBuilder, EventSearchCriterios eventSearchCriterios) {
-        Predicate predicateFilter = new PredicateSearchBuilder(criteriaBuilder)
+        return new PredicateSearchBuilder(criteriaBuilder)
                 .equalIntegerRoot(root,"tpEvent", eventSearchCriterios.getTypeEvent(), eventSearchCriterios.getTypeEvent() != null)
                 .greaterDateRoot(root,"dtEvent", eventSearchCriterios.getFromDate(), eventSearchCriterios.getFromDate() != null)
                 .lessDateRoot(root, "dtEvent", eventSearchCriterios.getToDate(), eventSearchCriterios.getToDate() != null)
                 .build();
-        return predicateFilter;
     }
 
 }

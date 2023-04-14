@@ -26,6 +26,8 @@ import { HomeComponent } from './views/home/home.component';
 import { EventsComponent } from './views/events/events.component';
 import { HttpClientInterceptor } from './views/guards/http-client-interceptor';
 import {MaterialModule} from "../material-module";
+import {MatFormFieldModule} from '@angular/material/form-field';
+
 
 @NgModule({
   declarations: [
@@ -43,7 +45,18 @@ import {MaterialModule} from "../material-module";
     BrowserModule,
     FormsModule,
     HttpClientModule,
+    MatFormFieldModule,
     NgxWebstorageModule.forRoot(),
+    MatIconModule,
+    MatListModule,
+    MatTooltipModule,
+    MatToolbarModule,
+    MatSnackBarModule,
+    MatButtonModule,
+    MatInputModule,
+    MatTabsModule,
+    MatCardModule,
+    MatSidenavModule,
     RouterModule.forRoot([
       {path: 'header', component: HeaderComponent},
       {path: 'login', component: AuthComponent},
