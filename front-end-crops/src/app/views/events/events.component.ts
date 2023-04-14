@@ -14,8 +14,8 @@ import { EventService } from '../service/event-service.service';
 export class EventsComponent implements OnInit {
 
   displayedColumns: string[] = ['cdEvent', 'nmEvent', 'dtEvent', 'tpEvent', 'placeEvent', 'action'];
-  eventData!: EventDTO[];
-  dataSource: any;
+  eventData!: any[];
+  dataSource!: MatTableDataSource<any>;
   searchKey!: string;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort; 
